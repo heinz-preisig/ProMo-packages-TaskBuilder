@@ -1,0 +1,100 @@
+# Automatically generated, do not edit!
+
+"""
+What:    Python simulation, explicit euler integrator
+Author:  {{ author }}
+Contact: arne.t.elve(at)ntnu.no
+Date:    {{ date }}
+Model:   {{ model_name }}
+"""
+
+# Import packages:
+import numpy as np                                   # Numerical python library
+from scipy.integrate import ode                           # Integrator in scipy
+import matplotlib.pyplot as plt                             # Data illustration
+from funcUtils import IndexSet, khatriRao, blockReduce, blockProduct   # Custom
+import copy
+
+from constants_{{ mod_name }} import *                           # Import all constants
+from selections_{{ mod_name }} import *                           # Import equation selections
+from initial_states_{{ mod_name }} import *
+# =================================== BODY ================================== #
+
+# INDEX SETS:
+{% for index_set in indices %}
+{{ index_set }}
+{% endfor %}
+
+# Network information:
+{% for network in networks %}
+{{ network }}
+{% endfor %}
+
+# Constant equations:
+{% for eq in constant_equations %}
+{{ eq }}
+{% endfor %}
+
+
+# INTEGRATING FUNCTION:
+def derivative(t, {% for state in states -%}{{ state }}{{ ", " if not loop.last}}{% endfor -%}):
+  """
+  t: time
+  state: {% for state in states -%}{{ state }}{{ ", " if not loop.last}}{% endfor %}
+
+  Integrating function:
+  dxdt = derivative(t, state)
+
+  Note: sequence of variables depends on integrator. Using scipy's ode requires
+  time before state, while odeint needs state before time.  Also the integrator
+  want  flat vectors,  no column vectors.  I, therefore, transpose  the vectors
+  manually. Normal transpose is not sufficient.
+  """
+  # EQUATIONS:
+  {% for eq in equations -%}
+  {{ eq }}
+  {% endfor -%}
+  return {% for derivative in derivatives -%}
+    {{ derivative }}{{ ", " if not loop.last}}
+  {%- endfor %}
+
+
+# INTEGRATOR
+data = {}
+{% for state in states -%}
+data['{{ state }}'] = []
+{% endfor -%}
+data['t'] = []
+dt = 0.1                                                         # Handcoded!!!
+{# integrator = ode(integrand).set_integrator('dop853') #}
+{# state = np.concatenate([{% for state in states -%}np.transpose({{ state }})[0]{{ ", " if not loop.last}}{% endfor %}]) #}
+{# integrator.set_initial_value(state, {{ frame_start }}) #}
+{# state = integrator.integrate(integrator.t + dt) #}
+{# data['t'].append(integrator.t) #}
+{# {% for state, state_start, state_end in states_and_lengths -%} #}
+{# data['{{ state }}'].append(state[{{ state_start }}:{{ state_end }}, np.newaxis]) #}
+{# {% endfor %} #}
+while {{ frame_start }} < {{ frame_end }}:
+  {% for derivative in derivatives -%}
+    {{ derivative }}{{ ", " if not loop.last}}
+  {%- endfor -%} = derivative({{ frame_start }}, {% for state in states -%}{{ state }}{{ ", " if not loop.last}}{% endfor -%})
+  {{ frame_start }} += dt
+  {% for stat1, der in states_and_derivatives -%}
+  {{ stat1 }} += np.multiply({{ der }}, dt)
+  {% endfor %}
+  {%- for state in states -%}
+  data['{{ state }}'].append(copy.copy({{state}}))
+  {% endfor %}
+data['t'].append(copy.copy({{ frame_start }}))
+
+
+
+{% for state, labels in states_and_labels -%}
+data['{{ state }}'] = np.transpose(data['{{ state }}'])[0]
+labels = {{ labels }}
+for i, (dat, label) in enumerate(zip(data['{{ state }}'], labels)):
+  plt.plot(data['t'], dat, label = label)
+plt.legend()
+plt.show()
+
+{% endfor -%}

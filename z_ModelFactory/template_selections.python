@@ -1,0 +1,21 @@
+# Automatically generated, do not edit!
+
+"""
+What:    Python simulation
+Author:  Tobias
+Contact: arne.t.elve(at)ntnu.no
+Date:    {{date}}
+Model:   {{model_name}}
+File:    Equation selections
+"""
+
+# Import packages:
+import numpy as np                                   # Numerical python library
+
+# =================================== BODY ================================== #
+
+# AUTOMATICALLY GENERATED STUFF:
+# Equation selections:
+{% for sel in equation_selections %}
+{{ sel }}
+{% endfor %}

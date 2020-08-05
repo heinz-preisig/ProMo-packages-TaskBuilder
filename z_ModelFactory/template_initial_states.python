@@ -1,0 +1,24 @@
+# Automatically generated, do not edit!
+
+"""
+What:    Python simulation
+Author:  Tobias
+Contact: arne.t.elve(at)ntnu.no
+Date:    {{date}}
+Model:   {{model_name}}
+"""
+
+# Import packages:
+import numpy as np                                   # Numerical python library
+
+# =================================== BODY ================================== #
+
+# INITIAL STATE:
+{% for state in state_variables %}
+{{ state }}
+{% endfor %}
+
+# FRAMES:
+{% for frame in frames %}
+{{ frame }}
+{% endfor %}

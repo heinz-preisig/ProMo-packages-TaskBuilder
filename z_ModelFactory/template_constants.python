@@ -1,0 +1,18 @@
+# Automatically generated, do not edit!
+
+"""
+What:    Python simulation constants
+Author:  Tobias
+Contact: arne.t.elve(at)ntnu.no
+Date:    {{date}}
+Model:   {{model_name}}
+File:    constants
+"""
+
+# Import packages:
+import numpy as np                                   # Numerical python library
+
+# CONSTANTS:
+{% for var in variables %}
+{{ var }}
+{% endfor %}
