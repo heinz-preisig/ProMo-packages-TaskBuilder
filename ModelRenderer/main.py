@@ -65,7 +65,7 @@ class ModelRenderer(object):
     self.mod_name = model_name
     self.model_dict = getData(FILES["model_file"] % (self.onto_name,
                                                      self.mod_name))
-    self.vars_dict = self.ontology.vars
+    self.vars_dict = self.ontology.variables
     self.eqs_dict = self.ontology.eqs
     self.rules = getData(FILES["rules_file"] % (self.onto_name))
 
