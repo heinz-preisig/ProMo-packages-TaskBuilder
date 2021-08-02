@@ -35,7 +35,7 @@ class Ui_ModelFactory(QtGui.QMainWindow):
     # self.ontology_name = 'SOFC_04'
     self.ontology_name = getOntologyName()
     self.ontology = OntologyContainer(self.ontology_name)
-    self.ontology_location = self.ontology.onto_path
+    self.ontology_location = self.ontology.ontology_location
     # data_file_resources = checkAndFixResources(self.ontology_name, stage="ontology-stage-2")
     # self.self.ontology_location = data_file_resources["self.ontology_location"]
     # self.mod_name = 'SOFC-GT-SIMPLIFIED'

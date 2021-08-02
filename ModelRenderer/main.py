@@ -61,7 +61,7 @@ class ModelRenderer(object):
     self.case_name = case_name
     # self.ui = ui
     self.onto_name = self.ontology.ontology_name  # Shortcut
-    self.onto_path = self.ontology.onto_path
+    self.onto_path = self.ontology.ontology_location
     self.mod_name = model_name
     self.model_dict = getData(FILES["model_file"] % (self.onto_name,
                                                      self.mod_name))

@@ -24,7 +24,7 @@ class Ui_ModelFactory(QtWidgets.QMainWindow):
 
     self.ontology_name = getOntologyName()
     self.ontology = OntologyContainer(self.ontology_name)
-    self.ontology_location = self.ontology.onto_path
+    self.ontology_location = self.ontology.ontology_location
 
     models_file = DIRECTORIES["model_library_location"] % self.ontology_name
     self.model_name, status = askForModelFileGivenOntologyLocation(models_file,

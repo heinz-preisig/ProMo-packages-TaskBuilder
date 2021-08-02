@@ -77,9 +77,9 @@ class ModelFactory(object):
     # self.__compile(self.language)
     # self.define_base_network_variables()
     # self.new_dump_network_variables_to_file()
-    self.network_variables = getData(os.path.join(self.ontology.onto_path, 'network_matrices.json'))
+    self.network_variables = getData(os.path.join(self.ontology.ontology_location, 'network_matrices.json'))
     # print(self.network_variables)
-    self.variables_dict = getData(os.path.join(self.ontology.onto_path, 'variables.json'))
+    self.variables_dict = getData(os.path.join(self.ontology.ontology_location, 'variables.json'))
     self.nw_nnw_dict = self.merge_nw_nnw()
     self.object_oriented = False
     self.flow_system = True
@@ -95,7 +95,7 @@ class ModelFactory(object):
     # location = os.path.join(DIRECTORIES["ontology_repository"], self.ontology_name)
     # print(location)
     # self.ontology = OntologyContainer( self.ontology_name ) # DONE
-    self.ontology_location = self.ontology.onto_path
+    self.ontology_location = self.ontology.ontology_location
     self.rules = self.ontology.rules
     self.ontology_in_hiearchy = self.ontology.ontology_in_hiearchy
     self.ontology_in_hiearchy_inverse = invertDict(
